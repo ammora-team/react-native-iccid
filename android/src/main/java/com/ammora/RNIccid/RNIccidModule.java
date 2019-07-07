@@ -8,6 +8,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.common.logging.FLog;
 
 import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 
@@ -23,11 +24,22 @@ public class RNIccidModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void get(Promise promise) {
+  public void deviceId(int slot, Promise promise) {
+    try {
+      TelephonyManager telManager = (TelephonyManager) this.reactContext.getSystemService(Context.TELEPHONY_SERVICE);
+      promise.resolve(telManager.getDeviceId(slot));
+    } catch (Exception e) {
+      FLog.e(TAG, e.toString());
+      promise.reject(e);
+    }
+  }
+
+  @ReactMethod
+  public void iccId(int slot, Promise promise) {
     try {
       SubscriptionManager manager = (SubscriptionManager) this.reactContext.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
       List<SubscriptionInfo> subscriptionInfos = manager.getActiveSubscriptionInfoList();
-      SubscriptionInfo subscriptionInfo = subscriptionInfos.get(0);
+      SubscriptionInfo subscriptionInfo = subscriptionInfos.get(slot);
       promise.resolve(subscriptionInfo.getIccId());
     } catch (Exception e) {
       FLog.e(TAG, e.toString());
