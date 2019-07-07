@@ -1,6 +1,6 @@
 
 {
-  "name": "react-native-iccid",
+  "name": "@ammora/react-native-iccid",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
