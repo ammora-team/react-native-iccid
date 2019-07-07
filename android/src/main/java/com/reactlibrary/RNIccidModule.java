@@ -11,6 +11,8 @@ import android.content.Context;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 
+import java.util.List;
+
 public class RNIccidModule extends ReactContextBaseJavaModule {
   private static final String TAG = "RNReactNativeIccid";
   private final ReactApplicationContext reactContext;
