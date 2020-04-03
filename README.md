@@ -1,44 +1,42 @@
 
 # @ammora/react-native-iccid
 
-## Getting started
+## Install package
 
-`$ npm install @ammora/react-native-iccid --save`
+`$ yarn add @ammora/react-native-iccid`
 
-### Mostly automatic installation
+### Automatic add native Android modules
 
 `$ react-native link @ammora/react-native-iccid`
 
 ### Manual installation
 
-
-#### iOS
-
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `@ammora/react-native-iccid` and add `RNIccid.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNIccid.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
-
 #### Android
 
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.RNIccidPackage;` to the imports at the top of the file
-  - Add `new RNIccidPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
+1. Append the following lines to `android/settings.gradle`:
+
   	```
   	include ':@ammora_react-native-iccid'
   	project(':@ammora_react-native-iccid').projectDir = new File(rootProject.projectDir, 	'../node_modules/@ammora/react-native-iccid/android')
   	```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      compile project(':@ammora_react-native-iccid')
-  	```
+2. Add to `android/app/src/main/AndroidManifest.xml` the following permission:
+    ```
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    ```
+3. Open up `android/app/src/main/java/.../MainApplication.java`
+  - Add `import com.ammora.RNIccid.RNIccidPackage;` to the imports at the top of the file
+  - Add `new RNIccidPackage()` to the list returned by the `getPackages()` method
 
 ## Usage
 ```javascript
-import RNIccid from 'react-native-iccid';
+import ICCID from '@ammora/react-native-iccid';
 
-// TODO: What to do with the module?
-RNIccid;
+ICCID.getIccid(0) // Parameter slot is required
+     .then(iccid => {
+       console.log(`Simcard at slot #${slot} got ICCID ${iccid}`);
+     })
+     .catch(e => {
+       console.log(`Error trying to get ICCID from device simcard at slot #${slot}`);
+       console.log(e);
+     });
 ```
-  
